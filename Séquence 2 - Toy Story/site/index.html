@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
+    <title>Toy Story - WR312 | QB</title>
+</head>
+<body>
+    <img class="logo" src="images/toy-story-logo.png" alt="logo_toystory">
+    <div id="cardContainer"></div>
+
+    <script>
+        // Charger les données depuis le fichier JSON
+        fetch('datastory.json')
+            .then(response => response.json())
+            .then(data => {
+                const cardContainer = document.getElementById('cardContainer');
+
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'toy-card';
+                    card.style = `background-color:${item.couleur};`;
+
+                    card.innerHTML = `
+                        <div class="toy-card__image">
+                            <img src="${item.photo}" alt="${item.nom}">
+                        </div>
+                        <div class="toy-card__content">
+                            <div class="toy-card__name"><h2>${item.nom}</h2></div>
+                            <div class="toy-card__description"><p>${item.info}</p></div>
+                            <div class="toy-card__unit-stats">
+                                <div><h3>${item.vie}</h3><h4>VIE</h4></div>
+                                <div id="stat-middle"><h3>${item.discretion}</h3><h4>DISCRETION</h4></div>
+                                <div><h3>${item.action}</h3><h4>ACTION</h4></div>
+                            </div>
+                        </div>
+                    `;
+
+                    cardContainer.appendChild(card);
+                    
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+
+    <script src="script.js"></script>
+    
+</body>
+
+</html>
