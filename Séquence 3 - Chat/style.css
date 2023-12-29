@@ -1,0 +1,143 @@
+*{
+    font-family: "Montserrat";
+}
+body{
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background: #000028;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.chat{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 90vh;
+    width: 40vw;
+    background-color: rgba(45, 39, 119, 0.54);
+    border-radius: 0 0 10px 10px;
+}
+
+@media screen and (max-width: 800px){
+    .chat{
+        width: 75vw;
+    }
+}
+
+.chat__screen{
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    background-color: white;
+    height: 88%;
+    overflow-y: scroll;
+}
+
+.message{
+    margin: 5px 10px;
+    background-color: #07156227;
+    padding: 10px 20px 10px 10px;
+    border-radius: 10px;
+}
+
+.right-align{
+    text-align: right;
+    background-color: #07156240;
+}
+
+.message__nom{
+    font-weight: 600;
+    font-size: 13px;
+    color: white;
+    padding: 3px 0;
+    /* margin-bottom: 3px; */
+    border-radius: 10px;
+    font-weight: 800;
+    color: black;
+}
+.message__contenu{
+    font-size: 15px;
+    font-weight: 500;
+}
+.message__date{
+    font-size: 10px;
+    color: rgb(0, 0, 0, 0.5);
+    margin-top: 3px;
+}
+
+p{
+    margin: 0;
+}
+
+.chat__input{
+    height: 12%;
+    width: 95%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+input{
+    border-radius: 3px;
+    border: none;
+    height: 30px;
+    padding: 0;
+}
+input[type="text"]{
+    text-indent: 10px;
+}
+
+#pseudo{
+    width: 18%;
+}
+#message{
+    width: 53%;
+}
+#button{
+    background-color: rgb(5, 0, 46);
+    font-weight: bold;
+    color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid rgb(255, 255, 255);
+}
+#button svg{
+    width: 18px;
+    height: 17px;
+    fill: white;
+}
+
+.message-separator{
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+#error-message{
+    position: absolute;
+    width: max-content;
+    padding: 20px 40px;
+    border-radius: 10px;
+    background-color: rgb(154, 0, 0);
+    border: 3px red solid;
+    color: white;
+    font-weight: 800;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

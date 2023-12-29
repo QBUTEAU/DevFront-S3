@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Chat - WR312 QB</title>
+</head>
+<body>
+
+    <script>
+        $(document).ready(function(){
+            var intervalId;  // Ajout de la variable pour stocker l'ID de l'intervalle
+        
+            function updateChatScreen() {
+                // On va récupérer le code généré par la page affiche.php
+                // et remplacer le contenu de #affiche
+                $.get('affiche.php').done(function(donnees){
+                    $('.chat__screen').html(donnees);
+                });
+            }
+        
+            // Toutes les 500ms
+            intervalId = setInterval(updateChatScreen, 500);
+        
+            // Quand on appuie sur le bouton d'envoi
+            $('#button').click(function(){
+                // Vérifie si le pseudo et le message ne sont pas vides
+                var pseudo = $('#pseudo').val();
+                var message = $('#message').val();
+    
+                // Vérifie si le pseudo et le message sont vides
+                if (pseudo.trim() === '' && message.trim() === '') {
+                    showError("Veuillez remplir tous les champs.");
+                    return;
+                }
+    
+                // Vérifie si le pseudo est vide
+                if (pseudo.trim() === '') {
+                    showError('Veuillez écrire votre pseudo.');
+                    return;
+                }
+    
+                // Vérifie si le message est vide
+                if (message.trim() === '') {
+                    showError('Veuillez écrire un message.');
+                    return;
+                }
+    
+                // Génère l'URL
+                var url_dire = 'dire.php?pseudo=' + encodeURIComponent(pseudo) + '&message=' + encodeURIComponent(message);
+        
+                // On envoie en asynchrone
+                $.ajax({
+                    url: url_dire,
+                    success: function() {
+                        // Mise à jour du chat après l'envoi
+                        updateChatScreen();
+        
+                        // On vide le champ message
+                        $('#message').val('');
+                    },
+                    error: function() {
+                        console.error('Erreur lors de l\'envoi du message.');
+                    }
+                });
+            });
+        
+            // Quand on appuie sur une touche
+            $(window).keydown(function(event){
+                // Sur la touche Entrée
+                if(event.keyCode == 13) {
+                    // On simule le clic sur le bouton envoyer
+                    $('#button').click();
+                }
+            });
+        
+            // Optionnel: Arrêter l'intervalle lors de la fermeture de la page
+            $(window).on('unload', function() {
+                clearInterval(intervalId);
+            });
+    
+            function showError(message) {
+                // Affiche le message d'erreur dans une div
+                $('#error-message').text(message);
+                $('#error-message').css('display', 'flex');
+    
+                // Masque le message d'erreur après quelques secondes (ajustez selon vos besoins)
+                setTimeout(function() {
+                    $('#error-message').hide();
+                }, 3000); // Masque le message après 3 secondes (ajustez selon vos besoins)
+            }
+        });
+    </script>
+
+    <div id="error-message"></div>
+
+    <div class="chat">
+        <div class="chat__screen">
+        </div>
+        <div class="chat__input">
+            <input type="text" id="pseudo" placeholder="Pseudo" required>
+            <input type="text" id="message" placeholder="Votre message." required>
+            <button id="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <!--! Font Awesome Pro 6.5.1 by @fontawesome - https://fontawesome.com License - 
+                    https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path d="M49.9 27.8C15.1 12.7-19.2 50.1-1.2 83.5L68.1 212.2c4.4 8.3 12.6 13.8 21.9 15c0 
+                    0 0 0 0 0l176 22c3.4 .4 6 3.3 6 6.7s-2.6 6.3-6 6.7l-176 22s0 0 0 0c-9.3 1.2-17.5 6.8-21.9 
+                    15L-1.2 428.5c-18 33.4 16.3 70.8 51.1 55.7L491.8 292.7c32.1-13.9 32.1-59.5 0-73.4L49.9 27.8z"/></svg></button>
+        </div>
+    </div>
+</body>
+</html>
